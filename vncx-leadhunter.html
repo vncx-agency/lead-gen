@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>VNCX LeadHunter Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#07090c;--bg2:#0d1117;--bg3:#131920;--bg4:#1a2330;
+  --bdr:#1d2a3a;--bdr2:#273a50;--bdr3:#344f6a;
+  --gold:#e8a020;--gold2:#f5b840;--gbg:rgba(232,160,32,.08);
+  --blue:#3080ff;--blbg:rgba(48,128,255,.08);
+  --green:#0ec97a;--grbg:rgba(14,201,122,.08);
+  --red:#f03050;--rdbg:rgba(240,48,80,.08);
+  --purple:#9d5fff;--prbg:rgba(157,95,255,.08);
+  --teal:#00bfaa;--tlbg:rgba(0,191,170,.08);
+  --txt:#dce8f8;--txt2:#7090b0;--txt3:#3d5570;
+  --f:'DM Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh;background:var(--bg);color:var(--txt);font-family:var(--f);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--bdr3);border-radius:2px}
+
+/* ─ TOPBAR */
+.bar{height:54px;display:flex;align-items:center;padding:0 1.5rem;gap:14px;border-bottom:1px solid var(--bdr);background:var(--bg);position:sticky;top:0;z-index:200}
+.brand{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0}
+.bmark{width:30px;height:30px;background:var(--gold);border-radius:5px;display:grid;place-items:center;font-weight:700;font-size:12px;color:#000;letter-spacing:-1px}
+.bname{font-size:15px;font-weight:700;color:var(--txt);letter-spacing:-.3px}
+.bsub{font-size:10px;color:var(--txt3);text-transform:uppercase;letter-spacing:.5px;margin-top:1px}
+.vsep{width:1px;height:20px;background:var(--bdr2);flex-shrink:0}
+.nav{display:flex;gap:2px}
+.nb{font-family:var(--f);font-size:13.5px;font-weight:500;color:var(--txt3);background:transparent;border:none;padding:6px 13px;border-radius:5px;cursor:pointer;transition:.12s}
+.nb:hover{background:var(--bg3);color:var(--txt2)}
+.nb.on{background:var(--bg3);color:var(--txt);font-weight:600}
+.bar-r{margin-left:auto;display:flex;align-items:center;gap:8px}
+.kpill{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:500;padding:5px 11px;border:1px solid var(--bdr2);border-radius:99px;cursor:pointer;color:var(--txt3);transition:.12s}
+.kpill:hover{border-color:var(--bdr3);color:var(--txt2)}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--bdr3);flex-shrink:0;transition:.2s}
+.dot.ok{background:var(--green)}
+.bxs{font-family:var(--f);font-size:12px;color:var(--txt3);background:transparent;border:1px solid var(--bdr2);border-radius:5px;padding:5px 10px;cursor:pointer;transition:.12s}
+.bxs:hover{color:var(--txt);border-color:var(--bdr3)}
+
+/* ─ VIEWS */
+.view{display:none;padding:1.5rem;max-width:1600px;margin:0 auto}
+.view.on{display:block}
+
+/* ─ HERO */
+.hero{margin-bottom:1.5rem}
+.hero h1{font-size:26px;font-weight:700;letter-spacing:-.5px;line-height:1.25}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero p{font-size:14px;color:var(--txt3);margin-top:5px}
+.pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.pill{font-size:11px;font-weight:500;padding:3px 10px;border-radius:99px;border:1px solid}
+.pg{color:var(--green);border-color:rgba(14,201,122,.3);background:var(--grbg)}
+.pb{color:var(--blue);border-color:rgba(48,128,255,.3);background:var(--blbg)}
+.pgo{color:var(--gold);border-color:rgba(232,160,32,.3);background:var(--gbg)}
+
+/* ─ CARD */
+.card{background:var(--bg2);border:1px solid var(--bdr);border-radius:10px;padding:1.25rem;margin-bottom:1rem}
+.ctitle{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--txt3);margin-bottom:1rem;display:flex;align-items:center;gap:7px}
+.cico{width:18px;height:18px;border-radius:3px;display:grid;place-items:center;font-size:10px;flex-shrink:0}
+.ico-g{background:var(--gbg);color:var(--gold);border:1px solid rgba(232,160,32,.25)}
+.ico-b{background:var(--blbg);color:var(--blue);border:1px solid rgba(48,128,255,.25)}
+.ico-gr{background:var(--grbg);color:var(--green);border:1px solid rgba(14,201,122,.25)}
+
+/* ─ FORM */
+.fgrid{display:grid;grid-template-columns:1.2fr 1fr auto;gap:10px;align-items:end;margin-bottom:1rem}
+@media(max-width:620px){.fgrid{grid-template-columns:1fr}}
+.fld{display:flex;flex-direction:column;gap:5px}
+.flbl{font-size:11px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:.6px}
+.fi{font-family:var(--f);font-size:14px;background:var(--bg3);border:1px solid var(--bdr);border-radius:6px;padding:10px 13px;color:var(--txt);outline:none;transition:.12s;width:100%}
+.fi::placeholder{color:var(--txt3)}
+.fi:focus{border-color:rgba(232,160,32,.5);background:var(--bg4)}
+.fi:disabled{opacity:.4;cursor:not-allowed}
+select.fi option{background:var(--bg3)}
+.go{font-family:var(--f);font-size:14px;font-weight:700;background:var(--gold);color:#000;border:none;border-radius:6px;padding:11px 24px;cursor:pointer;white-space:nowrap;transition:.12s;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.go:hover{background:var(--gold2)}
+.go:disabled{background:var(--bdr2);color:var(--txt3);cursor:not-allowed}
+.stop{font-family:var(--f);font-size:14px;font-weight:500;color:var(--red);background:transparent;border:1px solid rgba(240,48,80,.4);border-radius:6px;padding:11px 18px;cursor:pointer;transition:.12s;display:flex;align-items:center;gap:6px;flex-shrink:0}
+.stop:hover{background:var(--rdbg)}
+.btn{font-family:var(--f);font-size:12px;font-weight:500;color:var(--txt2);background:transparent;border:1px solid var(--bdr);border-radius:5px;padding:7px 13px;cursor:pointer;transition:.12s;white-space:nowrap;display:flex;align-items:center;gap:4px}
+.btn:hover{border-color:var(--bdr3);color:var(--txt)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn-g{color:var(--gold);border-color:rgba(232,160,32,.3)}
+.btn-g:hover{background:var(--gbg)}
+.btn-b{color:var(--blue);border-color:rgba(48,128,255,.3)}
+.btn-b:hover{background:var(--blbg)}
+
+/* ─ OPTS */
+.og{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:8px;padding-top:1rem;border-top:1px solid var(--bdr)}
+.ogrp{display:flex;flex-direction:column;gap:4px}
+.ogrp-t{font-size:10px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:.7px;margin-bottom:3px}
+.opt{display:flex;align-items:center;gap:7px;font-size:13.5px;color:var(--txt2);cursor:pointer;user-select:none;padding:3px 0}
+.opt input[type=checkbox]{accent-color:var(--gold);width:14px;height:14px;flex-shrink:0}
+.opt:hover{color:var(--txt)}
+.ni{font-family:var(--f);font-size:13px;background:var(--bg3);border:1px solid var(--bdr);border-radius:4px;padding:4px 8px;color:var(--txt);width:62px;text-align:center;outline:none}
+
+/* ─ PROGRESS */
+.pcrd{background:var(--bg2);border:1px solid var(--bdr);border-radius:10px;overflow:hidden;margin-bottom:1rem}
+.phdr{display:flex;align-items:center;gap:10px;padding:11px 16px}
+.pdot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.6)}}
+.pmsg{font-size:13px;font-weight:500;color:var(--txt2);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ppct{font-size:12px;font-weight:700;color:var(--gold);min-width:38px;text-align:right}
+.pbar{height:2px;background:var(--bdr)}
+.pfill{height:100%;background:linear-gradient(90deg,var(--gold),#ffd060,var(--green));transition:width .5s ease}
+.pstps{display:flex;gap:5px;flex-wrap:wrap;padding:9px 16px;border-top:1px solid var(--bdr)}
+.pst{font-size:10px;font-weight:500;padding:3px 9px;border-radius:99px;border:1px solid;display:flex;align-items:center;gap:3px}
+.pst.done{background:var(--grbg);color:var(--green);border-color:rgba(14,201,122,.25)}
+.pst.active{background:var(--blbg);color:var(--blue);border-color:rgba(48,128,255,.25)}
+.pst.pending{color:var(--txt3);border-color:var(--bdr)}
+.plog{padding:8px 16px;max-height:90px;overflow-y:auto;border-top:1px solid var(--bdr)}
+.pl{font-size:11px;padding:1px 0;display:flex;gap:7px}
+.pl .pt{color:var(--txt3);flex-shrink:0;font-variant-numeric:tabular-nums}
+.pl.ok .pm{color:var(--green)}.pl.warn .pm{color:var(--gold)}.pl.err .pm{color:var(--red)}.pl.info .pm{color:var(--txt2)}
+
+/* ─ STATS */
+.sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:7px;margin-bottom:1rem}
+.stat{background:var(--bg2);border:1px solid var(--bdr);border-radius:7px;padding:12px 14px;position:relative;overflow:hidden}
+.stat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.sg::before{background:var(--green)}.sa::before{background:var(--gold)}
+.sb::before{background:var(--blue)}.sp::before{background:var(--purple)}
+.st::before{background:var(--teal)}.sr::before{background:var(--red)}
+.slbl{font-size:10px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px}
+.sval{font-size:22px;font-weight:700;letter-spacing:-.5px}
+.ssub{font-size:10px;color:var(--txt3);margin-top:2px}
+
+/* ─ TABS */
+.tabs{display:flex;border-bottom:1px solid var(--bdr);margin-bottom:1rem}
+.tab{font-family:var(--f);font-size:13.5px;font-weight:500;color:var(--txt3);background:transparent;border:none;padding:10px 17px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:.12s;display:flex;align-items:center;gap:6px}
+.tab:hover{color:var(--txt2)}
+.tab.on{color:var(--gold);border-bottom-color:var(--gold);font-weight:600}
+.tbdg{font-size:10px;background:var(--bg3);border:1px solid var(--bdr);border-radius:99px;padding:1px 6px;font-weight:500}
+
+/* ─ TOOLBAR */
+.tbar{display:flex;align-items:center;gap:7px;margin-bottom:10px;flex-wrap:wrap}
+.tsep{width:1px;height:16px;background:var(--bdr);flex-shrink:0}
+.tr{margin-left:auto;display:flex;gap:5px;flex-wrap:wrap}
+.fb{font-family:var(--f);font-size:13px;background:var(--bg3);border:1px solid var(--bdr);border-radius:5px;padding:6px 11px;color:var(--txt);outline:none}
+.fb::placeholder{color:var(--txt3)}
+.fb:focus{border-color:var(--bdr2)}
+
+/* ─ TABLE */
+.tw{overflow-x:auto;border:1px solid var(--bdr);border-radius:8px;background:var(--bg2)}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:1500px}
+thead{background:var(--bg3);position:sticky;top:0;z-index:5}
+th{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--txt3);padding:10px 12px;text-align:left;border-bottom:1px solid var(--bdr);white-space:nowrap;cursor:pointer;user-select:none}
+th:hover{color:var(--txt2)}
+td{padding:10px 12px;border-bottom:1px solid var(--bdr);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,.007)}
+tr.sel td{background:rgba(232,160,32,.03)!important}
+.bn{font-weight:600;font-size:13.5px;color:var(--txt)}
+.bc{font-size:11px;color:var(--txt3);margin-top:2px}
+.cm{color:var(--txt3)}
+.cg{color:var(--green);word-break:break-all;line-height:1.4}
+.ca{color:var(--gold)}
+.cb{color:var(--blue)}
+.cp{color:var(--purple);line-height:1.4}
+.snip{font-size:12px;color:var(--txt3);font-style:italic;max-width:180px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.45}
+.slink{color:var(--blue);text-decoration:none;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+.slink:hover{text-decoration:underline}
+.sw{display:flex;flex-direction:column;gap:3px}
+.sa2{font-size:11px;text-decoration:none;display:flex;align-items:center;gap:4px;padding:1px 0}
+.sa2:hover{opacity:.8}
+.sa2.fb2{color:#4da6ff}.sa2.ig2{color:#e1306c}.sa2.tw2{color:#1da1f2}
+.sa2.li2{color:#0a66c2}.sa2.yt2{color:#ff4040}.sa2.tk2{color:var(--teal)}.sa2.wa2{color:var(--green)}
+.sr2{display:flex;align-items:center;gap:4px}
+.stars{color:var(--gold);font-size:11px;letter-spacing:-.5px}
+.sn{font-size:12px;color:var(--txt2)}
+.bdg{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:500;padding:3px 8px;border-radius:99px;border:1px solid;white-space:nowrap}
+.bdg-g{background:var(--grbg);color:var(--green);border-color:rgba(14,201,122,.3)}
+.bdg-go{background:var(--gbg);color:var(--gold);border-color:rgba(232,160,32,.3)}
+.bdg-r{background:var(--rdbg);color:var(--red);border-color:rgba(240,48,80,.3)}
+.bdg-b{background:var(--blbg);color:var(--blue);border-color:rgba(48,128,255,.3)}
+.bdg-gr{background:var(--bg3);color:var(--txt3);border-color:var(--bdr)}
+.sbx{display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:22px;border-radius:4px;font-size:12px;font-weight:700;padding:0 5px}
+.sbx.h{background:var(--grbg);color:var(--green)}
+.sbx.m{background:var(--gbg);color:var(--gold)}
+.sbx.l{background:var(--rdbg);color:var(--red)}
+.spin{width:12px;height:12px;border:2px solid var(--bdr2);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;display:inline-block;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ─ EMPTY / ERROR */
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4rem 2rem;color:var(--txt3);font-size:14px;gap:12px;text-align:center}
+.eico{font-size:32px;opacity:.2}
+.errbar{background:var(--rdbg);border:1px solid rgba(240,48,80,.25);border-radius:7px;padding:10px 15px;font-size:13px;color:var(--red);margin-bottom:1rem;display:flex;align-items:flex-start;gap:8px}
+
+/* ─ DETAIL PANEL */
+.dpov{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:400;display:flex;align-items:flex-start;justify-content:flex-end}
+.dppan{background:var(--bg2);border-left:1px solid var(--bdr);width:460px;height:100vh;overflow-y:auto;padding:1.5rem;animation:sli .18s ease;position:relative}
+@keyframes sli{from{transform:translateX(100%)}to{transform:translateX(0)}}
+.dpcl{position:absolute;top:1.25rem;right:1.5rem;background:transparent;border:1px solid var(--bdr);color:var(--txt3);cursor:pointer;width:28px;height:28px;border-radius:4px;display:grid;place-items:center;font-size:16px}
+.dpcl:hover{color:var(--txt);border-color:var(--bdr2)}
+.dpsec{margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--bdr)}
+.dpsec:last-child{border-bottom:none;margin-bottom:0}
+.dpst{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--txt3);margin-bottom:10px}
+.dpr{display:flex;flex-direction:column;gap:3px;margin-bottom:10px}
+.dpr:last-child{margin-bottom:0}
+.dpk{font-size:10px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:.5px}
+.dpv{font-size:13px;color:var(--txt);line-height:1.55;word-break:break-word}
+
+/* ─ ANALYSIS & PITCH */
+.awrap{background:var(--bg2);border:1px solid var(--bdr);border-radius:8px;padding:1.75rem;font-size:14px;line-height:1.85;color:var(--txt2)}
+.awrap h2{font-size:16px;font-weight:700;color:var(--txt);margin:1.75rem 0 .6rem;padding-bottom:6px;border-bottom:1px solid var(--bdr)}
+.awrap h2:first-child{margin-top:0}
+.awrap h3{font-size:13.5px;font-weight:600;color:var(--gold);margin:.9rem 0 .3rem}
+.awrap p{margin-bottom:.5rem}
+.awrap ul,.awrap ol{margin:.3rem 0 .6rem 1.3rem}
+.awrap li{margin-bottom:.3rem}
+.awrap strong{color:var(--txt);font-weight:600}
+.pbox{background:var(--bg3);border:1px solid var(--bdr2);border-radius:7px;padding:15px;font-size:14px;color:var(--txt2);line-height:1.75;white-space:pre-wrap;max-height:320px;overflow-y:auto}
+
+/* ─ IMPORT */
+.dz{border:2px dashed var(--bdr2);border-radius:10px;padding:2.5rem;text-align:center;cursor:pointer;transition:.2s;position:relative;background:var(--bg2)}
+.dz:hover,.dz.drag{border-color:var(--gold);background:var(--gbg)}
+.dz input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.dz-ico{font-size:36px;margin-bottom:12px;opacity:.4}
+.dz-t{font-size:16px;font-weight:600;color:var(--txt);margin-bottom:5px}
+.dz-s{font-size:13px;color:var(--txt3);line-height:1.6}
+
+/* ─ EXPORT GRID */
+.expgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:9px}
+.expc{background:var(--bg2);border:1px solid var(--bdr);border-radius:8px;padding:1.25rem;cursor:pointer;transition:.12s}
+.expc:hover{border-color:var(--bdr2)}
+.expico{font-size:22px;margin-bottom:9px}
+.expt{font-size:14px;font-weight:600;color:var(--txt);margin-bottom:4px}
+.expd{font-size:12px;color:var(--txt3);line-height:1.55;margin-bottom:12px}
+
+/* ─ MODAL */
+.mobg{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.mo{background:var(--bg2);border:1px solid var(--bdr2);border-radius:12px;padding:2rem;width:100%;max-width:500px;margin:1rem}
+.mo h2{font-size:19px;font-weight:700;margin-bottom:6px}
+.mo p{font-size:13.5px;color:var(--txt3);margin-bottom:1.25rem;line-height:1.6}
+.mofld{margin-bottom:.9rem}
+.mofld label{font-size:11px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:.6px;display:flex;align-items:center;gap:7px;margin-bottom:6px}
+.moact{display:flex;gap:8px;justify-content:flex-end;margin-top:1.25rem}
+.wbox{background:rgba(232,160,32,.06);border:1px solid rgba(232,160,32,.2);border-radius:6px;padding:9px 12px;font-size:12px;color:var(--gold);margin-top:.75rem;line-height:1.55}
+.wbox a{color:var(--gold)}
+.chk{width:14px;height:14px;accent-color:var(--gold);cursor:pointer}
+.rn{font-size:11px;color:var(--txt3)}
+
+/* ─ FOOTER */
+.footer{border-top:1px solid var(--bdr);padding:14px 1.5rem;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--txt3)}
+.footer a{color:var(--gold);text-decoration:none}
+.footer a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="bar">
+  <a class="brand" href="https://vncxagency.com" target="_blank">
+    <div class="bmark">VX</div>
+    <div>
+      <div class="bname">VNCX Agency</div>
+      <div class="bsub">LeadHunter Pro</div>
+    </div>
+  </a>
+  <div class="vsep"></div>
+  <nav class="nav">
+    <button class="nb on" onclick="nav('scrape')">Scrape</button>
+    <button class="nb" onclick="nav('import')">Import</button>
+    <button class="nb" onclick="nav('leads')">Leads</button>
+    <button class="nb" onclick="nav('outreach')">Outreach</button>
+    <button class="nb" onclick="nav('analysis')">Analysis</button>
+    <button class="nb" onclick="nav('export')">Export</button>
+  </nav>
+  <div class="bar-r">
+    <div class="kpill" onclick="openMo()"><span class="dot" id="dot-s"></span>SerpAPI</div>
+    <div class="kpill" onclick="openMo()"><span class="dot" id="dot-g"></span>Gemini</div>
+    <button class="bxs" onclick="openMo()">⚙ Keys</button>
+  </div>
+</header>
+
+<!-- ═ SCRAPE ═ -->
+<div class="view on" id="v-scrape">
+  <div class="hero">
+    <h1>Scrape every lead. <em>Miss nothing.</em></h1>
+    <p>SerpAPI exhaustively paginates Google Maps → Place Details → Google Search for emails & socials → Gemini scores & ranks</p>
+    <div class="pills">
+      <span class="pill pgo">SerpAPI Google Maps</span>
+      <span class="pill pg">Unlimited pagination</span>
+      <span class="pill pb">Email · Phone · Socials · Owner · Pricing</span>
+      <span class="pill pgo">Gemini AI scoring</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ctitle"><span class="cico ico-g">⌕</span>Search</div>
+    <div class="fgrid">
+      <div class="fld">
+        <span class="flbl">Business Type</span>
+        <input class="fi" id="q-type" placeholder="e.g. plumbers, dentists, wedding photographers..." onkeydown="if(event.key==='Enter')go()"/>
+      </div>
+      <div class="fld">
+        <span class="flbl">Location</span>
+        <input class="fi" id="q-loc" placeholder="e.g. New York, NY" onkeydown="if(event.key==='Enter')go()"/>
+      </div>
+      <div style="display:flex;gap:7px">
+        <button class="go" id="go-btn" onclick="go()"><span id="go-ico">⌕</span><span id="go-txt">Scrape All</span></button>
+        <button class="stop" id="stop-btn" onclick="stopIt()" style="display:none">■ Stop</button>
+      </div>
+    </div>
+    <div class="og">
+      <div class="ogrp">
+        <div class="ogrp-t">What to find</div>
+        <label class="opt"><input type="checkbox" id="o-email" checked/> Email addresses</label>
+        <label class="opt"><input type="checkbox" id="o-phone" checked/> Phone numbers</label>
+        <label class="opt"><input type="checkbox" id="o-social" checked/> Social profiles</label>
+        <label class="opt"><input type="checkbox" id="o-owner" checked/> Owner / contact name</label>
+      </div>
+      <div class="ogrp">
+        <div class="ogrp-t">Business intelligence</div>
+        <label class="opt"><input type="checkbox" id="o-price" checked/> Service pricing</label>
+        <label class="opt"><input type="checkbox" id="o-exp" checked/> Years of experience</label>
+        <label class="opt"><input type="checkbox" id="o-reviews" checked/> Customer reviews</label>
+      </div>
+      <div class="ogrp">
+        <div class="ogrp-t">Volume &amp; scoring</div>
+        <label class="opt">Max results: <input type="number" class="ni" id="o-max" value="0" min="0" title="0=no limit" style="margin-left:5px"/> <span style="font-size:11px;color:var(--txt3)">(0=all)</span></label>
+        <label class="opt"><input type="checkbox" id="o-score" checked/> AI lead scoring</label>
+        <label class="opt"><input type="checkbox" id="o-dedup" checked/> Deduplicate</label>
+      </div>
+    </div>
+  </div>
+  <div id="err-bar" class="errbar" style="display:none"><span>✕</span><span id="err-txt"></span></div>
+  <div id="pcrd" class="pcrd" style="display:none">
+    <div class="phdr">
+      <span class="pdot"></span>
+      <span class="pmsg" id="pmsg">Starting...</span>
+      <span class="ppct" id="ppct">0%</span>
+    </div>
+    <div class="pbar"><div class="pfill" id="pfill" style="width:2%"></div></div>
+    <div class="pstps" id="pstps"></div>
+    <div class="plog" id="plog"></div>
+  </div>
+</div>
+
+<!-- ═ IMPORT ═ -->
+<div class="view" id="v-import">
+  <div class="hero">
+    <h1>Import <em>existing leads</em></h1>
+    <p>Upload any CSV from your external scraper — columns auto-detected and normalized</p>
+  </div>
+  <div class="card">
+    <div class="ctitle"><span class="cico ico-b">↑</span>Upload CSV</div>
+    <div class="dz" id="dz" ondrop="onDrop(event)" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)">
+      <input type="file" accept=".csv,.tsv,.txt" onchange="onFilePick(event)"/>
+      <div class="dz-ico">📂</div>
+      <div class="dz-t">Drop your CSV here or click to browse</div>
+      <div class="dz-s">Auto-detects: business name · category · rating · reviews · phone · website · email · address · hours · top review · extra details (years in business)</div>
+    </div>
+    <div id="imp-prev" style="display:none;margin-top:1rem">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:.75rem">
+        <span style="font-size:13px;color:var(--txt2)" id="imp-info">—</span>
+        <div style="margin-left:auto;display:flex;gap:7px">
+          <button class="btn btn-g" onclick="doImport()">↓ Import <span id="imp-n">0</span> leads</button>
+          <button class="btn" onclick="cancelImport()">Cancel</button>
+        </div>
+      </div>
+      <div class="tw" style="max-height:280px;overflow-y:auto">
+        <table><thead><tr id="imp-head"></tr></thead><tbody id="imp-body"></tbody></table>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="ctitle"><span class="cico ico-g">?</span>Enrichment after import</div>
+    <div style="font-size:13px;color:var(--txt2);line-height:1.7">
+      After importing, go to the <strong style="color:var(--txt)">Leads</strong> tab and click <strong style="color:var(--gold)">Enrich imported leads</strong> to run SerpAPI + Gemini email/contact finding on any leads that are missing data.
+    </div>
+  </div>
+</div>
+
+<!-- ═ LEADS ═ -->
+<div class="view" id="v-leads">
+  <div id="s-grid" class="sgrid" style="display:none">
+    <div class="stat sg"><div class="slbl">Total</div><div class="sval" id="s-tot">0</div><div class="ssub">leads</div></div>
+    <div class="stat sg"><div class="slbl">Emails</div><div class="sval" id="s-em">0</div><div class="ssub" id="s-em-s">found</div></div>
+    <div class="stat sa"><div class="slbl">Phones</div><div class="sval" id="s-ph">0</div><div class="ssub">found</div></div>
+    <div class="stat sb"><div class="slbl">Socials</div><div class="sval" id="s-so">0</div><div class="ssub">with profiles</div></div>
+    <div class="stat sp"><div class="slbl">Owners</div><div class="sval" id="s-nm">0</div><div class="ssub">identified</div></div>
+    <div class="stat st"><div class="slbl">Pricing</div><div class="sval" id="s-pr">0</div><div class="ssub">found</div></div>
+    <div class="stat sa"><div class="slbl">Avg Rating</div><div class="sval" id="s-rt">—</div><div class="ssub">/ 5.0</div></div>
+    <div class="stat sb"><div class="slbl">Reviews</div><div class="sval" id="s-rv">0</div><div class="ssub">total</div></div>
+  </div>
+  <div id="leads-wrap" style="display:none">
+    <div class="tbar">
+      <span style="font-size:13px;color:var(--txt3)" id="l-lbl">—</span>
+      <div class="tsep"></div>
+      <input class="fb" style="width:200px" type="text" id="flt" placeholder="Filter name, email, phone..." oninput="renderTable()"/>
+      <select class="fb" style="width:155px" id="srt" onchange="renderTable()">
+        <option value="">Sort: default</option>
+        <option value="score-d">Score ↓</option>
+        <option value="rating-d">Rating ↓</option>
+        <option value="reviewCount-d">Reviews ↓</option>
+        <option value="yearsExp-d">Experience ↓</option>
+        <option value="name-a">Name A–Z</option>
+      </select>
+      <div class="tsep"></div>
+      <div class="tr">
+        <button class="btn" onclick="selAll()">Select all</button>
+        <button class="btn" onclick="clrSel()">Clear</button>
+        <button class="btn btn-g" onclick="enrichImported()">⟳ Enrich selected</button>
+        <button class="btn" onclick="removeSelected()" style="color:var(--red);border-color:rgba(240,48,80,.3)">✕ Remove</button>
+      </div>
+    </div>
+    <div class="tw">
+      <table>
+        <thead><tr>
+          <th style="width:28px"><input type="checkbox" class="chk" id="chk-all" onchange="togAll(this)"/></th>
+          <th style="width:24px">#</th>
+          <th onclick="csrt('name')">Business ↕</th>
+          <th onclick="csrt('score')">Score ↕</th>
+          <th onclick="csrt('rating')">Rating ↕</th>
+          <th onclick="csrt('reviewCount')">Reviews ↕</th>
+          <th>Owner</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Social Profiles</th>
+          <th>Pricing</th>
+          <th onclick="csrt('yearsExp')">Exp ↕</th>
+          <th>Address</th>
+          <th>Website</th>
+          <th>Hours</th>
+          <th>Top Review</th>
+          <th></th>
+        </tr></thead>
+        <tbody id="ltbody"></tbody>
+      </table>
+    </div>
+  </div>
+  <div id="leads-empty" class="empty">
+    <div class="eico">◎</div>
+    <div>No leads yet</div>
+    <div style="font-size:13px">Run a scrape or import a CSV</div>
+    <div style="display:flex;gap:8px;margin-top:4px">
+      <button class="btn btn-g" onclick="nav('scrape')">⌕ Scrape</button>
+      <button class="btn btn-b" onclick="nav('import')">↑ Import CSV</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═ OUTREACH ═ -->
+<div class="view" id="v-outreach">
+  <div class="hero">
+    <h1>High-ticket <em>outreach pitches</em></h1>
+    <p>Gemini writes personalized DM & email pitches — results-focused, authority energy, no generic templates</p>
+  </div>
+  <div class="card">
+    <div class="ctitle"><span class="cico ico-g">✉</span>Generate</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1rem">
+      <div class="fld"><span class="flbl">Select Lead</span>
+        <select class="fi" id="p-lead" onchange="onLeadPick()"><option value="">— choose a lead —</option></select>
+      </div>
+      <div class="fld"><span class="flbl">Type</span>
+        <select class="fi" id="p-type"><option value="both">Both (DM + Email)</option><option value="dm">DM only</option><option value="email">Email only</option></select>
+      </div>
+    </div>
+    <div class="fld" style="margin-bottom:1rem">
+      <span class="flbl">Extra context (optional)</span>
+      <input class="fi" id="p-ctx" placeholder="e.g. their website looks outdated, no Google Ads presence, few reviews..."/>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <button class="go" style="font-size:13px;padding:10px 20px" onclick="genPitch()"><span id="p-ico">✦</span> <span id="p-txt">Generate Pitch</span></button>
+      <button class="btn" onclick="genBatch()" id="batch-btn">✦ Batch all selected ↗</button>
+      <span style="font-size:12px;color:var(--txt3)" id="p-sel-lbl"></span>
+    </div>
+  </div>
+  <div id="p-out" style="display:none">
+    <div class="card">
+      <div class="ctitle"><span class="cico ico-g">DM</span>Direct Message</div>
+      <div style="display:flex;gap:6px;margin-bottom:9px">
+        <button class="btn btn-g" onclick="copyTxt('dm-box')">Copy DM</button>
+        <button class="btn" onclick="regenPitch('dm')">↻ Regen</button>
+      </div>
+      <div class="pbox" id="dm-box"></div>
+    </div>
+    <div class="card">
+      <div class="ctitle"><span class="cico ico-g">✉</span>Email</div>
+      <div style="display:flex;gap:6px;margin-bottom:9px">
+        <button class="btn btn-g" onclick="copyTxt('email-box')">Copy Email</button>
+        <button class="btn" onclick="regenPitch('email')">↻ Regen</button>
+      </div>
+      <div style="font-size:11px;color:var(--txt3);margin-bottom:5px;font-weight:600" id="p-subj"></div>
+      <div class="pbox" id="email-box"></div>
+    </div>
+  </div>
+  <div id="batch-out" style="display:none">
+    <div class="card">
+      <div class="ctitle"><span class="cico ico-g">✦</span>Batch — <span id="batch-lbl"></span></div>
+      <button class="btn btn-g" style="margin-bottom:12px" onclick="expBatch()">↓ Export all pitches CSV</button>
+      <div id="batch-list"></div>
+    </div>
+  </div>
+  <div id="p-empty" class="empty">
+    <div class="eico">✉</div><div>No leads available</div>
+    <button class="btn btn-g" style="margin-top:4px" onclick="nav('scrape')">⌕ Start scraping</button>
+  </div>
+</div>
+
+<!-- ═ ANALYSIS ═ -->
+<div class="view" id="v-analysis">
+  <div class="hero">
+    <h1>Market <em>intelligence report</em></h1>
+    <p>Gemini deep-analyzes your full pipeline — lead rankings, market landscape, outreach strategy</p>
+  </div>
+  <div class="tbar"><div class="tr">
+    <button class="btn btn-g" id="a-btn" onclick="runAnalysis()">✦ Run Gemini Analysis</button>
+    <button class="btn" onclick="expAnal()">↓ Export report</button>
+  </div></div>
+  <div id="a-out" class="awrap">
+    <div class="empty"><div class="eico">◈</div><div>Click <strong style="color:var(--txt)">Run Gemini Analysis</strong> for deep insights, lead rankings &amp; outreach strategy</div></div>
+  </div>
+</div>
+
+<!-- ═ EXPORT ═ -->
+<div class="view" id="v-export">
+  <div class="hero">
+    <h1>Export your <em>pipeline</em></h1>
+    <p>Selected leads only, or full pipeline — 6 formats</p>
+  </div>
+  <div class="expgrid">
+    <div class="expc" onclick="expCSV()">
+      <div class="expico">📊</div><div class="expt">CSV — Full</div>
+      <div class="expd">All 26 fields — emails, phones, socials, pricing, years, score. CRM-ready.</div>
+      <button class="btn btn-g" onclick="event.stopPropagation();expCSV()">↓ Download CSV</button>
+    </div>
+    <div class="expc" onclick="expJSON()">
+      <div class="expico">{ }</div><div class="expt">JSON — Full</div>
+      <div class="expd">Complete structured data with nested arrays for devs / automation.</div>
+      <button class="btn btn-b" onclick="event.stopPropagation();expJSON()">↓ Download JSON</button>
+    </div>
+    <div class="expc" onclick="expEmails()">
+      <div class="expico">✉</div><div class="expt">Email List</div>
+      <div class="expd">Deduplicated emails only — plain text for Mailchimp, mail merge, outreach.</div>
+      <button class="btn btn-g" onclick="event.stopPropagation();expEmails()">↓ Download .txt</button>
+    </div>
+    <div class="expc" onclick="expPhones()">
+      <div class="expico">📞</div><div class="expt">Phone List</div>
+      <div class="expd">All phone numbers — for dialers, SMS tools or WhatsApp campaigns.</div>
+      <button class="btn" style="color:var(--purple);border-color:rgba(157,95,255,.3)" onclick="event.stopPropagation();expPhones()">↓ Download .txt</button>
+    </div>
+    <div class="expc" onclick="expSocials()">
+      <div class="expico">🔗</div><div class="expt">Social Links CSV</div>
+      <div class="expd">Name + all social URLs per lead — for social outreach campaigns.</div>
+      <button class="btn" style="color:var(--teal);border-color:rgba(0,191,170,.3)" onclick="event.stopPropagation();expSocials()">↓ Download CSV</button>
+    </div>
+    <div class="expc" onclick="expAnal()">
+      <div class="expico">📝</div><div class="expt">Analysis Report</div>
+      <div class="expd">Gemini analysis as plain text — for your team or future reference.</div>
+      <button class="btn" onclick="event.stopPropagation();expAnal()">↓ Download .txt</button>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL PANEL -->
+<div id="dp-ov" class="dpov" style="display:none" onclick="if(event.target===this)closeDp()">
+  <div class="dppan"><button class="dpcl" onclick="closeDp()">×</button><div id="dp-body"></div></div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div id="mo" class="mobg" style="display:none">
+  <div class="mo">
+    <h2>API Keys</h2>
+    <p>Stored locally in your browser only. Sent directly to SerpAPI and Google — never logged anywhere else.</p>
+    <div class="mofld">
+      <label><span class="dot" id="sk-s"></span>SerpAPI Key <span style="font-size:11px;color:var(--txt3);font-weight:400">(business discovery + email search)</span></label>
+      <input type="password" class="fi" id="si-s" placeholder="8d5b44ba..." oninput="updDots()"/>
+    </div>
+    <div class="mofld">
+      <label><span class="dot" id="sk-g"></span>Gemini API Key <span style="font-size:11px;color:var(--txt3);font-weight:400">(scoring, analysis, outreach)</span></label>
+      <input type="password" class="fi" id="si-g" placeholder="AIzaSy..." oninput="updDots()"/>
+    </div>
+    <div class="moact">
+      <button class="btn" onclick="closeMo()">Cancel</button>
+      <button class="go" onclick="saveKeys()" style="font-size:13px;padding:9px 20px">Save Keys</button>
+    </div>
+    <div class="wbox">⚠ <strong>Security:</strong> Regenerate any key you've shared publicly. 
+      <a href="https://serpapi.com/manage-api-key" target="_blank">serpapi.com/manage-api-key</a> · 
+      <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <span>VNCX Agency LeadHunter Pro</span><span>·</span>
+  <a href="https://vncxagency.com" target="_blank">vncxagency.com</a>
+  <span>· Websites that work. SEO that dominates. Ads that pay.</span>
+  <span style="margin-left:auto">Powered by SerpAPI + Gemini</span>
+</footer>
+
+<script>
+'use strict';
+// ═══════════════════════════════════════ KEYS
+const SK=()=>localStorage.getItem('vx_sk')||'';
+const GK=()=>localStorage.getItem('vx_gk')||'';
+function openMo(){
+  document.getElementById('si-s').value=SK();
+  document.getElementById('si-g').value=GK();
+  updDots();
+  document.getElementById('mo').style.display='flex';
+}
+function closeMo(){document.getElementById('mo').style.display='none';}
+function updDots(){
+  const sv=document.getElementById('si-s').value.trim()||SK();
+  const gv=document.getElementById('si-g').value.trim()||GK();
+  document.getElementById('sk-s').className='dot'+(sv?' ok':'');
+  document.getElementById('sk-g').className='dot'+(gv?' ok':'');
+}
+function saveKeys(){
+  const sv=document.getElementById('si-s').value.trim();
+  const gv=document.getElementById('si-g').value.trim();
+  if(sv)localStorage.setItem('vx_sk',sv);
+  if(gv)localStorage.setItem('vx_gk',gv);
+  syncTopDots();closeMo();
+}
+function syncTopDots(){
+  document.getElementById('dot-s').className='dot'+(SK()?' ok':'');
+  document.getElementById('dot-g').className='dot'+(GK()?' ok':'');
+}
+window.addEventListener('load',()=>{syncTopDots();if(!SK()||!GK())setTimeout(openMo,700);});
+
+// ═══════════════════════════════════════ STATE
+let leads=[],sel=new Set(),sF=null,sD=-1,stopped=false,analText='',batchPitches=[];
+let pendingImport=[];
+const logLines=[];
+
+// ═══════════════════════════════════════ HELPERS
+const esc=s=>s?String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'):'';
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const id=s=>document.getElementById(s);
+function parseJSON(t){
+  if(!t)return null;
+  const s=t.replace(/```json|```/gi,'').trim();
+  try{
+    const ai=s.indexOf('['),aj=s.lastIndexOf(']');
+    const oi=s.indexOf('{'),oj=s.lastIndexOf('}');
+    if(ai>=0&&(oi<0||ai<oi))return JSON.parse(s.slice(ai,aj+1));
+    if(oi>=0)return JSON.parse(s.slice(oi,oj+1));
+  }catch{}
+  return null;
+}
+function showErr(m){id('err-txt').textContent=m;id('err-bar').style.display='flex';}
+function hideErr(){id('err-bar').style.display='none';}
+
+// ═══════════════════════════════════════ LOGGING
+function log(msg,type='info'){
+  const t=new Date().toLocaleTimeString('en',{hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  logLines.push({t,msg,type});
+  if(logLines.length>120)logLines.shift();
+  const el=id('plog');if(!el)return;
+  el.innerHTML=logLines.map(l=>`<div class="pl ${l.type}"><span class="pt">${l.t}</span><span class="pm">${esc(l.msg)}</span></div>`).join('');
+  el.scrollTop=el.scrollHeight;
+}
+function setP(msg,pct){
+  id('pmsg').textContent=msg;
+  id('pfill').style.width=Math.min(100,Math.max(2,pct))+'%';
+  id('ppct').textContent=Math.round(pct)+'%';
+}
+const STEPS=['Maps','Details','Contacts','Score','Done'];
+function rSteps(active){
+  const ai=STEPS.indexOf(active);
+  id('pstps').innerHTML=STEPS.map((s,i)=>`<span class="pst ${i<ai?'done':i===ai?'active':'pending'}">${i<ai?'✓':''} ${s}</span>`).join('');
+}
+
+// ═══════════════════════════════════════ NAV
+function nav(v){
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(el=>el.classList.remove('on'));
+  id('v-'+v)?.classList.add('on');
+  document.querySelectorAll('.nb').forEach(el=>{if(el.textContent.trim().toLowerCase()===v)el.classList.add('on');});
+  if(v==='leads')renderLeadsView();
+  if(v==='outreach')renderOutreachSel();
+}
+
+// ═══════════════════════════════════════ API LAYER
+// Calls go to the local Node proxy server (server.js) running on port 3001
+// This completely bypasses CORS — the server makes the real API calls
+const PROXY='http://localhost:3001';
+
+async function apiCall(path,opts={}){
+  const ctrl=new AbortController();
+  const t=setTimeout(()=>ctrl.abort(),30000);
+  try{
+    const r=await fetch(PROXY+path,{...opts,signal:ctrl.signal});
+    clearTimeout(t);
+    if(!r.ok){
+      let msg=`Server error ${r.status}`;
+      try{const e=await r.json();msg=e.error||msg;}catch{}
+      throw new Error(msg);
+    }
+    return r.json();
+  }catch(e){
+    clearTimeout(t);
+    if(e.name==='AbortError')throw new Error('Request timed out after 30s');
+    if(e.message.includes('Failed to fetch')||e.message.includes('NetworkError')||e.message.includes('ERR_CONNECTION_REFUSED')){
+      throw new Error('Cannot reach local server. Make sure server.js is running: open a terminal and run  node server.js');
+    }
+    throw e;
+  }
+}
+
+async function serpCall(params){
+  if(!SK())throw new Error('SerpAPI key not set — click Keys');
+  return apiCall('/serp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:SK(),params})});
+}
+async function mapsSearch(q,loc,start=0){
+  return serpCall({engine:'google_maps',q:`${q} in ${loc}`,type:'search',hl:'en',gl:'us',start});
+}
+async function placeDetails(placeId){
+  return serpCall({engine:'google_maps',place_id:placeId,type:'place',hl:'en'});
+}
+async function googleSearch(q){
+  return serpCall({engine:'google',q,num:5,hl:'en'});
+}
+
+// Extract emails from text using regex
+function extractEmails(text){
+  if(!text)return[];
+  const matches=text.match(/[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/g)||[];
+  return[...new Set(matches.filter(e=>!/example|test@|noreply|no-reply|donotreply|placeholder/i.test(e)))];
+}
+// Extract social URLs from text
+function extractSocials(text){
+  if(!text)return{};
+  const out={};
+  const find=pat=>{const m=text.match(pat);return m?m[0]:null;};
+  out.facebook=find(/https?:\/\/(www\.)?facebook\.com\/[^\s"')>\n]+/i);
+  out.instagram=find(/https?:\/\/(www\.)?instagram\.com\/[^\s"')>\n]+/i);
+  out.twitter=find(/https?:\/\/(www\.)?(twitter|x)\.com\/[^\s"')>\n]+/i);
+  out.linkedin=find(/https?:\/\/(www\.)?linkedin\.com\/[^\s"')>\n]+/i);
+  out.youtube=find(/https?:\/\/(www\.)?youtube\.com\/[^\s"')>\n]+/i);
+  out.tiktok=find(/https?:\/\/(www\.)?tiktok\.com\/[^\s"')>\n]+/i);
+  const wa=text.match(/(?:wa\.me\/|whatsapp[:\s]+)[\+\d\s\-()]{7,20}/i);
+  if(wa)out.whatsapp=wa[0];
+  return out;
+}
+
+// ═══════════════════════════════════════ GEMINI
+async function gemini(prompt,max=4096){
+  if(!GK())throw new Error('Gemini API key not set — click Keys');
+  return apiCall('/gemini',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({key:GK(),prompt,max})
+  }).then(d=>d.text||'');
+}
+
+// ═══════════════════════════════════════ ENRICH ONE LEAD via SerpAPI search
+async function enrichLead(L,opts){
+  const name=L.name, loc=L.address||'', site=L.website||'';
+  let emails=[], phones=[...( L.phone?[L.phone]:[])], socials={...L.socials};
+  let contactName=L.contactName, pricing=L.pricing, yearsExp=L.yearsExp;
+  const reviews=[...(L.additionalReviews||[])];
+
+  // ── 1. Google search for email & contact
+  if(opts.email||opts.owner){
+    try{
+      const q=site
+        ? `"${name}" contact email site:${site.replace(/^https?:\/\//,'').split('/')[0]}`
+        : `"${name}" "${loc}" contact email phone`;
+      const d=await googleSearch(q);
+      const blob=[
+        d.knowledge_graph?.description||'',
+        ...(d.organic_results||[]).map(r=>(r.snippet||'')+(r.title||'')),
+        d.knowledge_graph?.website||''
+      ].join(' ');
+      const found=extractEmails(blob);
+      emails=[...new Set([...emails,...found])];
+      // grab phone from knowledge graph
+      if(d.knowledge_graph?.phone&&!L.phone)phones.push(d.knowledge_graph.phone);
+      // owner name hint from knowledge graph
+      if(!contactName&&d.knowledge_graph?.owner)contactName=d.knowledge_graph.owner;
+    }catch(e){log(`Email search err: ${e.message}`,'warn');}
+    await sleep(200);
+  }
+
+  // ── 2. Search website contact page for email
+  if(opts.email&&site&&emails.length===0){
+    try{
+      const domain=site.replace(/^https?:\/\//,'').split('/')[0];
+      const d=await googleSearch(`site:${domain} email contact`);
+      const blob=(d.organic_results||[]).map(r=>r.snippet||'').join(' ');
+      emails=[...new Set([...emails,...extractEmails(blob)])];
+    }catch{}
+    await sleep(150);
+  }
+
+  // ── 3. Social profiles search
+  if(opts.social){
+    try{
+      const d=await googleSearch(`"${name}" "${loc}" facebook OR instagram OR linkedin`);
+      const blob=(d.organic_results||[]).map(r=>(r.link||'')+(r.snippet||'')).join(' ');
+      const found=extractSocials(blob+(d.organic_results||[]).map(r=>r.link||'').join(' '));
+      Object.keys(found).forEach(k=>{if(found[k]&&!socials[k])socials[k]=found[k];});
+    }catch(e){log(`Social search err: ${e.message}`,'warn');}
+    await sleep(200);
+  }
+
+  // ── 4. Pricing & years search
+  if(opts.price||opts.exp){
+    try{
+      const d=await googleSearch(`"${name}" "${loc}" pricing years established`);
+      const blob=(d.organic_results||[]).map(r=>r.snippet||'').join(' ')+' '+(d.knowledge_graph?.description||'');
+      if(opts.price&&!pricing){
+        const pm=blob.match(/\$[\d,]+(?:\s*[-–]\s*\$[\d,]+)?(?:\s*\/\s*(?:hr|hour|session|project|month))?/i);
+        if(pm)pricing=pm[0];
+      }
+      if(opts.exp&&!yearsExp){
+        const ym=blob.match(/(\d{2,4})\+?\s*years?\s+(?:in\s+business|experience|of\s+experience)/i)
+          ||blob.match(/(?:since|established|founded)\s+(\d{4})/i)
+          ||blob.match(/(\d{2,4})\+?\s*years?\s+/i);
+        if(ym){
+          const n=parseInt(ym[1]);
+          yearsExp=n>1900?new Date().getFullYear()-n:n;
+        }
+      }
+    }catch{}
+    await sleep(150);
+  }
+
+  // ── 5. Owner name from Gemini (fast, uses existing data)
+  if(opts.owner&&!contactName&&(emails.length>0||L.website)){
+    try{
+      const emailHint=emails[0]||'';
+      const local=emailHint.split('@')[0]||'';
+      if(local&&/^[a-z]+[._-]?[a-z]+$/i.test(local)){
+        // infer from email pattern like john.smith@ or jsmith@
+        const parts=local.split(/[._-]/);
+        if(parts.length>=2)contactName=parts.map(p=>p.charAt(0).toUpperCase()+p.slice(1)).join(' ');
+      }
+    }catch{}
+  }
+
+  return{
+    email:emails[0]||null,
+    additionalEmails:emails.slice(1),
+    emailStatus:emails.length>0?'found':'not_found',
+    phone:phones[0]||null,
+    additionalPhones:phones.slice(1),
+    socials,contactName,pricing,yearsExp,
+    additionalReviews:reviews
+  };
+}
+
+// ═══════════════════════════════════════ MAIN SCRAPE
+function stopIt(){stopped=true;log('Stop requested','warn');}
+
+async function go(){
+  if(!SK()){openMo();return;}
+  if(!GK()){openMo();return;}
+  const qType=id('q-type').value.trim();
+  const qLoc=id('q-loc').value.trim();
+  if(!qType||!qLoc){showErr('Enter a business type and location.');return;}
+
+  stopped=false;logLines.length=0;
+  hideErr();
+  id('pcrd').style.display='block';
+  id('go-btn').disabled=true;
+  id('stop-btn').style.display='flex';
+  id('go-txt').textContent='Scraping...';
+  id('go-ico').innerHTML='<span class="spin"></span>';
+
+  const maxR=parseInt(id('o-max').value)||0;
+  const doEmail=id('o-email').checked;
+  const doPhone=id('o-phone').checked;
+  const doSocial=id('o-social').checked;
+  const doOwner=id('o-owner').checked;
+  const doPrice=id('o-price').checked;
+  const doExp=id('o-exp').checked;
+  const doScore=id('o-score').checked;
+  const doDedup=id('o-dedup').checked;
+  const enrichOpts={email:doEmail,phone:doPhone,social:doSocial,owner:doOwner,price:doPrice,exp:doExp};
+
+  const newLeads=[];
+  const seen=new Set();
+
+  try{
+    // ── PHASE 1: Google Maps pagination
+    rSteps('Maps');
+    log(`SerpAPI Google Maps: "${qType}" in "${qLoc}"...`,'info');
+    let start=0,page=1;
+    while(true){
+      if(stopped)break;
+      if(maxR>0&&newLeads.length>=maxR)break;
+      setP(`Maps page ${page} — ${newLeads.length} found so far...`, Math.min(35,3+page*4));
+      log(`Maps page ${page} (start=${start})...`,'info');
+
+      let data;
+      try{data=await mapsSearch(qType,qLoc,start);}
+      catch(e){
+        log(`Maps error: ${e.message}`,'err');
+        if(page===1)throw e;
+        break;
+      }
+
+      const results=data.local_results||[];
+      if(!results.length){log('No more Maps results — all pages collected.','ok');break;}
+
+      let added=0;
+      for(const r of results){
+        if(stopped)break;
+        if(maxR>0&&newLeads.length>=maxR)break;
+        const dk=(r.title||'').toLowerCase().trim()+'|'+(r.address||'').toLowerCase().slice(0,25);
+        if(doDedup&&seen.has(dk))continue;
+        seen.add(dk);
+        const extraTxt=r.description||r.type||'';
+        const yrM=extraTxt.match(/(\d+)\+?\s*years?\s+in\s+business/i);
+        newLeads.push({
+          id:'serp-'+Date.now()+'-'+Math.random().toString(36).slice(2,8),
+          name:r.title||'Unknown',category:r.type||qType,
+          address:r.address||null,phone:r.phone||null,
+          rating:parseFloat(r.rating)||null,
+          reviewCount:parseInt(String(r.reviews||'').replace(/[^\d]/g,''))||null,
+          website:r.website||null,googleMapsUrl:r.link||null,
+          placeId:r.place_id||null,hours:r.hours||null,
+          topReview:r.snippet||null,yearsExp:yrM?parseInt(yrM[1]):null,
+          pricing:r.price||null,
+          email:null,emailStatus:'pending',contactName:null,
+          socials:{facebook:null,instagram:null,twitter:null,linkedin:null,youtube:null,tiktok:null,whatsapp:null},
+          additionalEmails:[],additionalPhones:[],additionalReviews:[],
+          score:null,scoreReason:null,source:'serpapi'
+        });
+        added++;
+      }
+      log(`Page ${page}: +${added} businesses (total: ${newLeads.length})`,'ok');
+      leads=[...leads,...newLeads.slice(leads.length)];
+      nav('leads');renderLeadsView();updateStats();
+      if(results.length<20){log('Last page reached.','ok');break;}
+      start+=20;page++;
+      await sleep(300);
+    }
+    if(!newLeads.length){setP('No results from Google Maps. Try different terms.',0);return;}
+
+    // ── PHASE 2: Place Details
+    rSteps('Details');
+    const withPid=newLeads.filter(l=>l.placeId);
+    log(`Place details for ${withPid.length} businesses...`,'info');
+    for(let i=0;i<withPid.length;i++){
+      if(stopped)break;
+      const L=withPid[i];
+      setP(`Place details ${i+1}/${withPid.length}: ${L.name}`, 35+((i+1)/withPid.length)*15);
+      try{
+        const d=await placeDetails(L.placeId);
+        const pr=d.place_results||d.knowledge_graph||{};
+        const idx=leads.findIndex(x=>x.id===L.id);
+        if(idx>=0){
+          leads[idx]={...leads[idx],
+            phone:leads[idx].phone||pr.phone||null,
+            website:leads[idx].website||pr.website||null,
+            hours:leads[idx].hours||pr.hours||null,
+            pricing:leads[idx].pricing||pr.price||null,
+            topReview:leads[idx].topReview||(pr.reviews_results?.[0]?.snippet)||null,
+            additionalReviews:(pr.reviews_results||[]).slice(0,3).map(rv=>rv.snippet).filter(Boolean)
+          };
+        }
+        log(`Details OK: ${L.name}`,'ok');
+      }catch(e){log(`Details skip ${L.name}: ${e.message}`,'warn');}
+      await sleep(180);
+    }
+    renderLeadsView();updateStats();
+
+    // ── PHASE 3: Contact enrichment via SerpAPI Google Search
+    rSteps('Contacts');
+    log(`Enriching contacts for ${newLeads.length} leads via Google Search...`,'info');
+    for(let i=0;i<newLeads.length;i++){
+      if(stopped)break;
+      const L=newLeads[i];
+      const pct=50+((i+1)/newLeads.length)*35;
+      setP(`Contacts ${i+1}/${newLeads.length}: ${L.name}`,pct);
+      const idx=leads.findIndex(x=>x.id===L.id);
+      if(idx>=0){leads[idx]={...leads[idx],emailStatus:'scraping'};renderLeadsView();}
+      try{
+        const result=await enrichLead(leads[idx]||L,enrichOpts);
+        if(idx>=0)leads[idx]={...leads[idx],...result};
+        log(`${L.name}: ${result.email?'✓ '+result.email:'no email'}, ${result.phone?'✓ phone':''}, ${Object.values(result.socials||{}).filter(Boolean).length} socials`,'ok');
+      }catch(e){
+        if(idx>=0)leads[idx]={...leads[idx],emailStatus:'not_found'};
+        log(`Enrich skip ${L.name}: ${e.message}`,'warn');
+      }
+      renderLeadsView();updateStats();
+      await sleep(250);
+    }
+
+    // ── PHASE 4: Gemini lead scoring
+    if(doScore&&leads.length&&!stopped){
+      rSteps('Score');
+      setP('Gemini scoring leads...',90);
+      log(`Scoring ${leads.length} leads with Gemini...`,'info');
+      const BATCH=50;
+      for(let b=0;b<leads.length;b+=BATCH){
+        if(stopped)break;
+        const chunk=leads.slice(b,b+BATCH);
+        try{
+          const prompt=`You are scoring business leads for VNCX Agency — a premium digital marketing agency selling website redesign, SEO, and paid ads as a complete revenue system.
+
+Score each lead 1–10 (10=hottest prospect). A high score = established business, strong reputation, clearly NEEDS better digital marketing (old website, no ads, few socials, strong offline presence).
+
+Data:
+${JSON.stringify(chunk.map(l=>({id:l.id,name:l.name,category:l.category,rating:l.rating,reviews:l.reviewCount,yearsExp:l.yearsExp,hasWebsite:!!l.website,hasSocials:Object.values(l.socials||{}).filter(Boolean).length,hasEmail:!!l.email,hasPhone:!!l.phone,pricing:l.pricing,hours:l.hours})))}
+
+Return ONLY a JSON array — no markdown, no text before or after:
+[{"id":"...","score":8,"scoreReason":"one sentence"}]`;
+          const raw=await gemini(prompt,3000);
+          const scores=parseJSON(raw);
+          if(Array.isArray(scores)){
+            scores.forEach(s=>{
+              const i=leads.findIndex(l=>String(l.id)===String(s.id));
+              if(i>=0){leads[i].score=s.score;leads[i].scoreReason=s.scoreReason;}
+            });
+            log(`Scored ${scores.length} leads (batch ${Math.floor(b/BATCH)+1})`,'ok');
+          }
+        }catch(e){log(`Score batch error: ${e.message}`,'warn');}
+      }
+      renderLeadsView();
+    }
+
+    rSteps('Done');
+    const msg=stopped?`Stopped — ${leads.length} leads collected.`:`Done — ${leads.length} leads scraped & enriched.`;
+    setP(msg,100);log(msg,'ok');
+    renderLeadsView();updateStats();
+    setTimeout(()=>id('pcrd').style.display='none',5000);
+
+  }catch(e){
+    showErr(e.message);
+    log(`Fatal: ${e.message}`,'err');
+    id('pcrd').style.display='none';
+  }finally{
+    id('go-btn').disabled=false;
+    id('stop-btn').style.display='none';
+    id('go-txt').textContent='Scrape All';
+    id('go-ico').textContent='⌕';
+  }
+}
+
+// Enrich already-imported / selected leads on demand
+async function enrichImported(){
+  const targets=sel.size>0?leads.filter(l=>sel.has(l.id)):leads.filter(l=>l.emailStatus==='pending');
+  if(!targets.length){alert('Select leads to enrich or have pending leads first.');return;}
+  if(!SK()){openMo();return;}
+  const opts={email:true,phone:true,social:true,owner:true,price:true,exp:true};
+  logLines.length=0;
+  id('pcrd').style.display='block';
+  id('go-btn').disabled=true;
+  stopped=false;
+  for(let i=0;i<targets.length;i++){
+    if(stopped)break;
+    const L=targets[i];
+    setP(`Enriching ${i+1}/${targets.length}: ${L.name}`,Math.round(((i+1)/targets.length)*100));
+    log(`Enriching: ${L.name}`,'info');
+    const idx=leads.findIndex(x=>x.id===L.id);
+    if(idx>=0){leads[idx].emailStatus='scraping';renderLeadsView();}
+    try{
+      const result=await enrichLead(L,opts);
+      if(idx>=0)leads[idx]={...leads[idx],...result};
+      log(`${L.name}: ${result.email||'no email'}`,'ok');
+    }catch(e){
+      if(idx>=0)leads[idx].emailStatus='not_found';
+      log(`Skip ${L.name}: ${e.message}`,'warn');
+    }
+    renderLeadsView();updateStats();
+    await sleep(250);
+  }
+  setP('Enrichment done.',100);
+  setTimeout(()=>id('pcrd').style.display='none',3000);
+  id('go-btn').disabled=false;
+}
+
+// ═══════════════════════════════════════ CSV IMPORT
+function onDragOver(e){e.preventDefault();id('dz').classList.add('drag');}
+function onDragLeave(){id('dz').classList.remove('drag');}
+function onDrop(e){e.preventDefault();id('dz').classList.remove('drag');const f=e.dataTransfer.files[0];if(f)readCSV(f);}
+function onFilePick(e){const f=e.target.files[0];if(f)readCSV(f);}
+
+function readCSV(file){
+  const reader=new FileReader();
+  reader.onload=e=>parseCSVText(e.target.result,file.name);
+  reader.readAsText(file);
+}
+function parseCSVText(text,fname){
+  function parseLine(line){
+    const r=[];let c='',q=false;
+    for(let i=0;i<line.length;i++){
+      const ch=line[i];
+      if(ch==='"'){if(q&&line[i+1]==='"'){c+='"';i++;}else q=!q;}
+      else if(ch===','&&!q){r.push(c.trim());c='';}
+      else c+=ch;
+    }
+    r.push(c.trim());
+    return r.map(v=>v.replace(/^"+|"+$/g,'').trim());
+  }
+  const lines=text.split(/\r?\n/).filter(l=>l.trim());
+  if(lines.length<2)return;
+  const heads=parseLine(lines[0]).map(h=>h.toLowerCase().replace(/[^a-z0-9]/g,' ').trim());
+  const col=(...keys)=>heads.findIndex(h=>keys.some(k=>h.includes(k)));
+  const iName=col('business name','name','title','company');
+  const iCat=col('category','type','niche');
+  const iRat=col('rating','stars');
+  const iRev=col('reviews','review count','reviewcount');
+  const iPh=col('phone','tel','mobile');
+  const iWeb=col('website','url','web');
+  const iEm=col('email');
+  const iMaps=col('google maps','maps url','maps');
+  const iHours=col('time','hours','open','schedule');
+  const iReview=col('top review','review snippet','snippet','comment');
+  const iExtra=col('extra details','extra','details','description');
+  const iAddr=col('address','location','addr');
+
+  pendingImport=lines.slice(1).map((l,i)=>{
+    const r=parseLine(l);
+    const get=idx=>idx>=0?(r[idx]||'').replace(/^·\s*/,'').trim()||null:null;
+    const nm=get(iName)||get(0)||'';
+    if(!nm||nm.length<2)return null;
+    const extra=get(iExtra)||'';
+    const yrM=extra.match(/(\d+)\+?\s*years?\s+in\s+business/i);
+    const revStr=get(iRev)||'';
+    const revN=parseInt(revStr.replace(/[^\d]/g,''))||null;
+    const phone=get(iPh);
+    const email=get(iEm);
+    return{
+      id:'imp-'+Date.now()+'-'+i+'-'+Math.random().toString(36).slice(2),
+      name:nm,category:get(iCat),
+      address:get(iAddr)||(extra.replace(/\d+\+?\s*years?\s+in\s+business\s*·?\s*/gi,'').trim()||null),
+      phone,rating:parseFloat(get(iRat))||null,reviewCount:revN,
+      website:get(iWeb),googleMapsUrl:get(iMaps),
+      hours:get(iHours),topReview:get(iReview),
+      yearsExp:yrM?parseInt(yrM[1]):null,
+      email,emailStatus:email?'found':'pending',
+      contactName:null,pricing:null,score:null,scoreReason:null,
+      socials:{facebook:null,instagram:null,twitter:null,linkedin:null,youtube:null,tiktok:null,whatsapp:null},
+      additionalEmails:[],additionalPhones:[],additionalReviews:[],source:'import'
+    };
+  }).filter(Boolean);
+
+  id('imp-info').textContent=`${fname} — ${pendingImport.length} leads detected`;
+  id('imp-n').textContent=pendingImport.length;
+  id('imp-prev').style.display='block';
+  const cols=['Name','Category','Rating','Reviews','Phone','Website','Email','Hours'];
+  id('imp-head').innerHTML=cols.map(c=>`<th>${c}</th>`).join('');
+  id('imp-body').innerHTML=pendingImport.slice(0,12).map(l=>`<tr>
+    <td class="bn" style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(l.name)}</td>
+    <td class="cm">${esc(l.category||'—')}</td>
+    <td>${l.rating||'—'}</td><td>${l.reviewCount||'—'}</td>
+    <td class="cm">${esc(l.phone||'—')}</td>
+    <td>${l.website?`<a class="slink" href="${esc(l.website)}" target="_blank">${esc(l.website.replace(/^https?:\/\//,'').slice(0,22))}</a>`:'—'}</td>
+    <td>${l.email?`<span class="cg">${esc(l.email)}</span>`:'<span class="cm">—</span>'}</td>
+    <td class="cm">${esc(l.hours||'—')}</td>
+  </tr>`).join('')+(pendingImport.length>12?`<tr><td colspan="8" style="text-align:center;color:var(--txt3);font-size:12px;padding:8px">... and ${pendingImport.length-12} more</td></tr>`:'');
+}
+function doImport(){
+  const existingKeys=new Set(leads.map(l=>l.name.toLowerCase().trim()));
+  const fresh=pendingImport.filter(l=>!existingKeys.has(l.name.toLowerCase().trim()));
+  leads=[...leads,...fresh];
+  log(`Imported ${fresh.length} leads (${pendingImport.length-fresh.length} duplicates skipped)`,'ok');
+  pendingImport=[];
+  id('imp-prev').style.display='none';
+  updateStats();nav('leads');
+}
+function cancelImport(){pendingImport=[];id('imp-prev').style.display='none';}
+
+// ═══════════════════════════════════════ LEADS VIEW
+function renderLeadsView(){
+  const has=leads.length>0;
+  id('s-grid').style.display=has?'grid':'none';
+  id('leads-wrap').style.display=has?'block':'none';
+  id('leads-empty').style.display=has?'none':'flex';
+  if(has)renderTable();
+}
+function renderTable(){
+  const fv=(id('flt')?.value||'').toLowerCase();
+  let fl=leads.filter(l=>{
+    if(!fv)return true;
+    return[l.name,l.email,l.phone,l.address,l.category,l.contactName].some(v=>v&&String(v).toLowerCase().includes(fv));
+  });
+  const sv=id('srt')?.value||'';
+  if(sv){
+    const[f,d]=sv.split('-');
+    fl.sort((a,b)=>{const av=a[f],bv=b[f];if(av==null)return 1;if(bv==null)return -1;if(typeof av==='string')return av.localeCompare(bv)*(d==='a'?1:-1);return(av-bv)*(d==='a'?1:-1);});
+  }else if(sF){
+    fl.sort((a,b)=>{const av=a[sF],bv=b[sF];if(av==null)return 1;if(bv==null)return -1;if(typeof av==='string')return av.localeCompare(bv)*sD;return(av-bv)*sD;});
+  }
+  id('l-lbl').textContent=fv?`${fl.length} of ${leads.length} leads`:`${leads.length} leads`;
+  id('tc')&&(id('tc').textContent=leads.length);
+  id('ltbody').innerHTML=fl.map((l,i)=>`
+    <tr class="${sel.has(l.id)?'sel':''}" id="row-${l.id}">
+      <td><input type="checkbox" class="chk" ${sel.has(l.id)?'checked':''} onchange="togRow('${l.id}',this)"/></td>
+      <td class="rn">${i+1}</td>
+      <td><div class="bn">${esc(l.name)}</div>${l.category?`<div class="bc">${esc(l.category)}</div>`:''}</td>
+      <td>${scoreCell(l)}</td>
+      <td>${starsCell(l.rating)}</td>
+      <td><span>${l.reviewCount!=null?l.reviewCount.toLocaleString():'<span class="cm">—</span>'}</span></td>
+      <td>${l.contactName?`<span class="ca">${esc(l.contactName)}</span>`:'<span class="cm">—</span>'}</td>
+      <td>${phoneCell(l)}</td>
+      <td>${emailCell(l)}</td>
+      <td>${socialCell(l.socials)}</td>
+      <td>${l.pricing?`<span class="cp" style="max-width:130px;display:block;font-size:12px;line-height:1.4">${esc(l.pricing)}</span>`:'<span class="cm">—</span>'}</td>
+      <td>${l.yearsExp?`<span class="ca">${l.yearsExp}yr</span>`:'<span class="cm">—</span>'}</td>
+      <td><span class="cm" style="font-size:12px;max-width:150px;display:block;line-height:1.4">${esc(l.address||'—')}</span></td>
+      <td>${l.website?`<a class="slink" href="${esc(l.website)}" target="_blank">${esc(l.website.replace(/^https?:\/\//,'').slice(0,26))}</a>`:'<span class="cm">—</span>'}</td>
+      <td><span class="cm" style="font-size:12px">${esc(l.hours||'—')}</span></td>
+      <td><div class="snip">${esc(l.topReview||'—')}</div></td>
+      <td><button class="btn" style="font-size:11px;padding:5px 10px" onclick="openDp('${l.id}')">View</button></td>
+    </tr>`).join('');
+}
+
+function starsCell(n){
+  if(!n)return'<span class="cm">—</span>';
+  const f=Math.min(5,Math.round(n));
+  return`<div class="sr2"><span class="stars">${'★'.repeat(f)+'☆'.repeat(5-f)}</span><span class="sn">${parseFloat(n).toFixed(1)}</span></div>`;
+}
+function emailCell(l){
+  if(l.emailStatus==='scraping')return`<span class="bdg bdg-b"><span class="spin"></span> searching</span>`;
+  if(l.emailStatus==='found'&&l.email){
+    let h=`<span class="cg">${esc(l.email)}</span>`;
+    if(l.additionalEmails?.length)h+=`<br><span class="cm" style="font-size:11px">+${l.additionalEmails.length} more</span>`;
+    return h;
+  }
+  if(l.emailStatus==='not_found')return`<span class="bdg bdg-go">not found</span>`;
+  if(l.emailStatus==='failed')return`<span class="bdg bdg-r">error</span>`;
+  return`<span class="bdg bdg-gr">pending</span>`;
+}
+function phoneCell(l){
+  if(!l.phone)return'<span class="cm">—</span>';
+  let h=`<span>${esc(l.phone)}</span>`;
+  if(l.additionalPhones?.length)h+=`<br><span class="cm" style="font-size:11px">+${l.additionalPhones.length}</span>`;
+  return h;
+}
+function socialCell(s){
+  if(!s||!Object.values(s).some(Boolean))return'<span class="cm">—</span>';
+  const M={facebook:['fb2','F'],instagram:['ig2','I'],twitter:['tw2','T'],linkedin:['li2','L'],youtube:['yt2','Y'],tiktok:['tk2','K'],whatsapp:['wa2','W']};
+  return`<div class="sw">${Object.entries(M).filter(([k])=>s[k]).map(([k,[c,lbl]])=>`<a class="sa2 ${c}" href="${esc(s[k])}" target="_blank"><span style="width:14px;text-align:center;font-size:10px;font-weight:700">${lbl}</span>${esc(s[k].replace(/^https?:\/\/(www\.)?/,'').split('/')[0].slice(0,20))}</a>`).join('')}</div>`;
+}
+function scoreCell(l){
+  if(l.score==null)return'<span class="cm">—</span>';
+  const c=l.score>=7?'h':l.score>=4?'m':'l';
+  return`<span class="sbx ${c}" title="${esc(l.scoreReason||'')}">${l.score}</span>`;
+}
+function csrt(f){if(sF===f)sD*=-1;else{sF=f;sD=-1;}id('srt').value='';renderTable();}
+function togRow(id2,cb){if(cb.checked)sel.add(id2);else sel.delete(id2);const r=document.getElementById('row-'+id2);if(r)r.className=cb.checked?'sel':'';}
+function togAll(cb){getFiltered().forEach(l=>{if(cb.checked)sel.add(l.id);else sel.delete(l.id);});renderTable();}
+function selAll(){getFiltered().forEach(l=>sel.add(l.id));renderTable();}
+function clrSel(){sel.clear();renderTable();}
+function getFiltered(){const fv=(id('flt')?.value||'').toLowerCase();return fv?leads.filter(l=>[l.name,l.email,l.phone,l.address].some(v=>v&&String(v).toLowerCase().includes(fv))):leads;}
+function removeSelected(){leads=leads.filter(l=>!sel.has(l.id));sel.clear();renderLeadsView();updateStats();}
+
+// ═══════════════════════════════════════ STATS
+function updateStats(){
+  const t=leads.length;
+  const em=leads.filter(l=>l.emailStatus==='found').length;
+  const ph=leads.filter(l=>l.phone).length;
+  const so=leads.filter(l=>l.socials&&Object.values(l.socials).some(Boolean)).length;
+  const nm=leads.filter(l=>l.contactName).length;
+  const pr=leads.filter(l=>l.pricing).length;
+  const rats=leads.filter(l=>l.rating);
+  const avg=rats.length?(rats.reduce((s,l)=>s+l.rating,0)/rats.length).toFixed(1):'—';
+  const rev=leads.reduce((s,l)=>s+(l.reviewCount||0),0);
+  const set=(k,v)=>{const el=id(k);if(el)el.textContent=v;};
+  set('s-tot',t);set('s-em',em);set('s-ph',ph);set('s-so',so);set('s-nm',nm);set('s-pr',pr);set('s-rt',avg);set('s-rv',rev.toLocaleString());
+  const sub=id('s-em-s');if(sub)sub.textContent=t?`${Math.round(em/t*100)}% coverage`:'found';
+}
+
+// ═══════════════════════════════════════ DETAIL PANEL
+function openDp(lid){
+  const l=leads.find(x=>String(x.id)===String(lid));if(!l)return;
+  const allEmails=[l.email,...(l.additionalEmails||[])].filter(Boolean);
+  const allPhones=[l.phone,...(l.additionalPhones||[])].filter(Boolean);
+  const allRevs=[l.topReview,...(l.additionalReviews||[])].filter(Boolean);
+  const sLinks=Object.entries(l.socials||{}).filter(([,v])=>v).map(([k,v])=>`<a href="${esc(v)}" target="_blank" style="color:var(--blue);font-size:13px;display:block;margin-bottom:5px">${k}: ${esc(v)}</a>`).join('');
+  id('dp-body').innerHTML=`
+    <div style="margin-right:2rem;margin-bottom:1.5rem">
+      <div style="font-size:18px;font-weight:700;margin-bottom:4px">${esc(l.name)}</div>
+      <div style="font-size:12px;color:var(--txt3)">${esc(l.category||'')}${l.score!=null?` · <span style="color:var(--gold)">Score ${l.score}/10</span>`:''}${l.yearsExp?` · ${l.yearsExp}yr exp`:''}</div>
+    </div>
+    <div class="dpsec">
+      <div class="dpst">Contact</div>
+      <div class="dpr"><div class="dpk">Owner</div><div class="dpv" style="color:var(--gold)">${l.contactName||'—'}</div></div>
+      <div class="dpr"><div class="dpk">Phone(s)</div><div class="dpv">${allPhones.join('<br>')||'—'}</div></div>
+      <div class="dpr"><div class="dpk">Email(s)</div><div class="dpv">${allEmails.map(e=>`<span style="color:var(--green)">${esc(e)}</span>`).join('<br>')||'—'}</div></div>
+      <div class="dpr"><div class="dpk">Website</div><div class="dpv">${l.website?`<a href="${esc(l.website)}" target="_blank" style="color:var(--blue)">${esc(l.website)}</a>`:'—'}</div></div>
+    </div>
+    <div class="dpsec"><div class="dpst">Social Profiles</div>${sLinks||'<span style="font-size:13px;color:var(--txt3)">none found</span>'}</div>
+    <div class="dpsec">
+      <div class="dpst">Business Details</div>
+      <div class="dpr"><div class="dpk">Address</div><div class="dpv">${esc(l.address||'—')}</div></div>
+      <div class="dpr"><div class="dpk">Hours</div><div class="dpv">${esc(l.hours||'—')}</div></div>
+      <div class="dpr"><div class="dpk">Years in Business</div><div class="dpv">${l.yearsExp?`${l.yearsExp} years`:'—'}</div></div>
+      <div class="dpr"><div class="dpk">Pricing</div><div class="dpv" style="color:var(--purple)">${esc(l.pricing||'—')}</div></div>
+      <div class="dpr"><div class="dpk">Rating</div><div class="dpv">${l.rating?`${l.rating.toFixed(1)} / 5.0 · ${(l.reviewCount||0).toLocaleString()} reviews`:'—'}</div></div>
+    </div>
+    ${allRevs.length?`<div class="dpsec"><div class="dpst">Reviews</div>${allRevs.map(r=>`<div style="font-size:13px;color:var(--txt2);font-style:italic;line-height:1.65;margin-bottom:9px">"${esc(r)}"</div>`).join('')}</div>`:''}
+    ${l.scoreReason?`<div class="dpsec"><div class="dpst">Score Reasoning</div><div style="font-size:13px;color:var(--txt2);line-height:1.6">${esc(l.scoreReason)}</div></div>`:''}
+    <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:.75rem">
+      ${l.googleMapsUrl?`<a href="${esc(l.googleMapsUrl)}" target="_blank" class="btn">Open in Maps ↗</a>`:''}
+      <button class="btn btn-g" onclick="closeDp();id('p-lead').value='${l.id}';nav('outreach')">✉ Draft outreach</button>
+    </div>`;
+  id('dp-ov').style.display='flex';
+}
+function closeDp(){id('dp-ov').style.display='none';}
+
+// ═══════════════════════════════════════ OUTREACH
+function renderOutreachSel(){
+  const sel2=id('p-lead');if(!sel2)return;
+  const prev=sel2.value;
+  sel2.innerHTML='<option value="">— choose a lead —</option>'+leads.map(l=>`<option value="${l.id}">${esc(l.name)}${l.score!=null?` [${l.score}/10]`:''}</option>`).join('');
+  if(prev)sel2.value=prev;
+  const sl=id('p-sel-lbl');if(sl)sl.textContent=sel.size>0?`${sel.size} selected in pipeline`:'';
+  id('p-empty').style.display=leads.length?'none':'flex';
+  id('p-out').style.display='none';
+  id('batch-out').style.display='none';
+}
+function onLeadPick(){id('p-out').style.display='none';id('batch-out').style.display='none';}
+
+async function buildPitch(l,ctx=''){
+  const prompt=`You are the lead growth strategist for VNCX Agency — we build websites that work, run SEO that dominates, and run paid ad campaigns engineered as complete revenue systems. Website: https://vncxagency.com
+
+Write two high-converting outreach messages for this business:
+
+Business: ${l.name}
+Category: ${l.category||'business'}
+Location: ${l.address||''}
+Rating: ${l.rating||'N/A'} (${l.reviewCount||0} reviews)
+Years in business: ${l.yearsExp||'unknown'}
+Website: ${l.website||'none found'}
+Social platforms: ${Object.entries(l.socials||{}).filter(([,v])=>v).map(([k])=>k).join(', ')||'none found'}
+Contact name: ${l.contactName||'unknown'}
+${ctx?`Extra context: ${ctx}`:''}
+
+RULES:
+- High-ticket energy: confident, direct, authority — NEVER desperate or salesy
+- Speak results and systems — position VNCX as a revenue partner, not just "a marketing agency"
+- Reference their specific details (name, rating, reviews, years) to personalize
+- NEVER mention other clients, NEVER cite specific revenue numbers from past clients
+- No clichés: no "I came across your business", no "hope this finds you well"
+- DM: max 75 words, opens with a bold hook based on their situation, ends with ONE question
+- Email subject: punchy, specific, 8 words max
+- Email body: 3 short paragraphs, 130–160 words total, clear CTA
+
+Return ONLY this JSON — no markdown:
+{"dm":"...","emailSubject":"...","emailBody":"..."}`;
+
+  const raw=await gemini(prompt,1200);
+  const parsed=parseJSON(raw);
+  if(parsed&&parsed.dm)return parsed;
+  // fallback: parse from raw text
+  return{dm:raw.slice(0,400),emailSubject:'Partnership opportunity',emailBody:raw.slice(400,900)||raw};
+}
+
+async function genPitch(){
+  const lid=id('p-lead').value;
+  if(!lid){alert('Select a lead first');return;}
+  const l=leads.find(x=>String(x.id)===String(lid));if(!l)return;
+  if(!GK()){openMo();return;}
+  id('p-ico').innerHTML='<span class="spin"></span>';
+  id('p-txt').textContent='Generating...';
+  id('p-out').style.display='none';
+  try{
+    const ctx=id('p-ctx').value;
+    const r=await buildPitch(l,ctx);
+    id('dm-box').textContent=r.dm||'';
+    id('email-box').textContent=r.emailBody||'';
+    id('p-subj').textContent=r.emailSubject?`Subject: ${r.emailSubject}`:'';
+    id('p-out').style.display='block';
+    id('batch-out').style.display='none';
+  }catch(e){alert('Error: '+e.message);}
+  finally{id('p-ico').textContent='✦';id('p-txt').textContent='Generate Pitch';}
+}
+async function regenPitch(type){
+  const lid=id('p-lead').value;if(!lid)return;
+  const l=leads.find(x=>String(x.id)===String(lid));if(!l)return;
+  try{
+    const r=await buildPitch(l,id('p-ctx').value);
+    if(type==='dm')id('dm-box').textContent=r.dm||'';
+    else{id('email-box').textContent=r.emailBody||'';id('p-subj').textContent=r.emailSubject?`Subject: ${r.emailSubject}`:'';  }
+  }catch(e){alert('Error: '+e.message);}
+}
+function copyTxt(elId){
+  const t=id(elId).textContent;
+  navigator.clipboard.writeText(t).then(()=>{
+    const btn=document.querySelector(`[onclick="copyTxt('${elId}')"]`);
+    if(btn){const o=btn.textContent;btn.textContent='✓ Copied!';setTimeout(()=>btn.textContent=o,2000);}
+  });
+}
+async function genBatch(){
+  const targets=sel.size>0?leads.filter(l=>sel.has(l.id)):leads.slice(0,10);
+  if(!targets.length){alert('Select leads from the pipeline first');return;}
+  if(!GK()){openMo();return;}
+  const btn=id('batch-btn');btn.disabled=true;btn.textContent='Generating...';
+  batchPitches=[];
+  id('batch-lbl').textContent=`${targets.length} leads`;
+  id('batch-out').style.display='block';
+  id('p-out').style.display='none';
+  id('batch-list').innerHTML=`<div class="empty"><span class="spin" style="width:16px;height:16px;border-width:2px"></span><div>Generating ${targets.length} pitches...</div></div>`;
+  for(const l of targets){
+    try{const r=await buildPitch(l,'');batchPitches.push({...r,name:l.name,email:l.email,phone:l.phone});}
+    catch{batchPitches.push({name:l.name,email:l.email,phone:l.phone,dm:'[failed]',emailSubject:'',emailBody:'[failed]'});}
+    await sleep(300);
+  }
+  id('batch-list').innerHTML=batchPitches.map((p,i)=>`
+    <div style="border-bottom:1px solid var(--bdr);padding:14px 0${i===batchPitches.length-1?';border:none':''}">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap">
+        <span style="font-size:14px;font-weight:600;color:var(--txt)">${i+1}. ${esc(p.name)}</span>
+        ${p.email?`<span style="font-size:12px;color:var(--green)">${esc(p.email)}</span>`:''}
+        ${p.phone?`<span style="font-size:12px;color:var(--txt3)">${esc(p.phone)}</span>`:''}
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div><div style="font-size:10px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px">DM</div><div class="pbox" style="max-height:130px">${esc(p.dm)}</div></div>
+        <div><div style="font-size:10px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px">Email — ${esc(p.emailSubject)}</div><div class="pbox" style="max-height:130px">${esc(p.emailBody)}</div></div>
+      </div>
+    </div>`).join('');
+  btn.disabled=false;btn.textContent='✦ Batch all selected ↗';
+}
+function expBatch(){
+  if(!batchPitches.length)return;
+  const h=['Name','Email','Phone','DM','Email Subject','Email Body'];
+  const rows=batchPitches.map(p=>[p.name,p.email,p.phone,p.dm,p.emailSubject,p.emailBody].map(v=>`"${String(v||'').replace(/"/g,'""')}"`));
+  dl([h.join(','),...rows.map(r=>r.join(','))].join('\n'),'vncx_pitches.csv','text/csv');
+}
+
+// ═══════════════════════════════════════ ANALYSIS
+async function runAnalysis(){
+  if(!leads.length){alert('No leads to analyze');return;}
+  if(!GK()){openMo();return;}
+  const btn=id('a-btn');btn.disabled=true;btn.textContent='Analyzing...';
+  id('a-out').innerHTML=`<div class="empty"><span class="spin" style="width:18px;height:18px;border-width:2px"></span><div>Gemini analyzing ${leads.length} leads...</div></div>`;
+  const qt=id('q-type')?.value||'businesses',ql=id('q-loc')?.value||'the area';
+  try{
+    const sample=leads.slice(0,60).map(l=>({name:l.name,category:l.category,rating:l.rating,reviews:l.reviewCount,address:l.address,phone:!!l.phone,email:l.email,contactName:l.contactName,socials:Object.entries(l.socials||{}).filter(([,v])=>v).map(([k])=>k),pricing:l.pricing,yearsExp:l.yearsExp,hasWebsite:!!l.website,score:l.score,topReview:l.topReview}));
+    const prompt=`You are a senior sales analyst for VNCX Agency — a premium digital agency delivering websites, SEO, and ad systems as a complete revenue engine for businesses.
+
+Analyze these ${leads.length} scraped leads for "${qt}" in "${ql}":
+${JSON.stringify(sample,null,2)}
+
+Write a detailed report using ## markdown headers:
+
+## Executive Summary
+## Lead Rankings (all leads with score + one-line reason)
+## Top 10 Priority Targets
+For each: name, why they're a priority, specific VNCX pitch angle, best outreach channel
+## Contact Data Coverage
+Email %, phone %, social coverage %, owner name %, gaps and how to fill them
+## Market Intelligence
+Digital maturity of this market, pricing landscape, rating/review patterns, competitive density
+## Outreach Strategy for VNCX
+Best channels, messaging angles for this specific niche, templates
+## 5 Quick Win Actions`;
+    const txt=await gemini(prompt,8192);
+    analText=txt;
+    id('a-out').innerHTML=md2html(txt);
+  }catch(e){id('a-out').innerHTML=`<div class="empty"><div style="color:var(--red)">Error: ${esc(e.message)}</div></div>`;}
+  finally{btn.disabled=false;btn.textContent='✦ Run Gemini Analysis';}
+}
+function md2html(t){
+  return t.split('\n').map(l=>{
+    if(l.startsWith('### '))return`<h3>${esc(l.slice(4))}</h3>`;
+    if(l.startsWith('## '))return`<h2>${esc(l.slice(3))}</h2>`;
+    if(l.startsWith('# '))return`<h2>${esc(l.slice(2))}</h2>`;
+    if(/^[-*] /.test(l))return`<ul><li>${esc(l.slice(2)).replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</li></ul>`;
+    if(/^\d+\. /.test(l))return`<ol><li>${esc(l.replace(/^\d+\.\s/,''))}</li></ol>`;
+    if(!l.trim())return'<p></p>';
+    return`<p>${esc(l).replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</p>`;
+  }).join('').replace(/<\/ul>\s*<ul>/g,'').replace(/<\/ol>\s*<ol>/g,'');
+}
+
+// ═══════════════════════════════════════ EXPORTS
+function getList(){return sel.size>0?leads.filter(l=>sel.has(l.id)):leads;}
+function dl(content,name,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;a.click();}
+function fn(){const q=id('q-type')?.value||'leads',l=id('q-loc')?.value||'';return`vncx_${q}_${l}`.replace(/\s+/g,'_').toLowerCase();}
+function expCSV(){
+  const list=getList();if(!list.length)return alert('No leads');
+  const h=['Name','Category','Address','Owner Name','Phone','Extra Phones','Email','Extra Emails','Rating','Reviews','Website','Facebook','Instagram','Twitter','LinkedIn','YouTube','TikTok','WhatsApp','Pricing','Years Exp','Score','Score Reason','Hours','Top Review','Extra Reviews','Maps URL','Source'];
+  const rows=list.map(l=>[l.name,l.category,l.address,l.contactName,l.phone,(l.additionalPhones||[]).join('|'),l.email,(l.additionalEmails||[]).join('|'),l.rating,l.reviewCount,l.website,l.socials?.facebook,l.socials?.instagram,l.socials?.twitter,l.socials?.linkedin,l.socials?.youtube,l.socials?.tiktok,l.socials?.whatsapp,l.pricing,l.yearsExp,l.score,l.scoreReason,l.hours,l.topReview,(l.additionalReviews||[]).join(' | '),l.googleMapsUrl,l.source].map(v=>`"${String(v||'').replace(/"/g,'""')}"`));
+  dl([h.join(','),...rows.map(r=>r.join(','))].join('\n'),fn()+'.csv','text/csv');
+}
+function expJSON(){const list=getList();if(!list.length)return alert('No leads');dl(JSON.stringify(list,null,2),fn()+'.json','application/json');}
+function expEmails(){
+  const emails=[...new Set(getList().flatMap(l=>[l.email,...(l.additionalEmails||[])]).filter(Boolean))];
+  if(!emails.length)return alert('No emails found');
+  dl(emails.join('\n'),fn()+'_emails.txt','text/plain');
+}
+function expPhones(){
+  const phones=[...new Set(getList().flatMap(l=>[l.phone,...(l.additionalPhones||[])]).filter(Boolean))];
+  if(!phones.length)return alert('No phones found');
+  dl(phones.join('\n'),fn()+'_phones.txt','text/plain');
+}
+function expSocials(){
+  const list=getList();
+  const h=['Name','Facebook','Instagram','Twitter','LinkedIn','YouTube','TikTok','WhatsApp'];
+  const rows=list.map(l=>[l.name,l.socials?.facebook,l.socials?.instagram,l.socials?.twitter,l.socials?.linkedin,l.socials?.youtube,l.socials?.tiktok,l.socials?.whatsapp].map(v=>`"${String(v||'').replace(/"/g,'""')}"`));
+  dl([h.join(','),...rows.map(r=>r.join(','))].join('\n'),fn()+'_socials.csv','text/csv');
+}
+function expAnal(){
+  if(!analText)return alert('Run analysis first');
+  dl(analText,fn()+'_analysis.txt','text/plain');
+}
+</script>
+</body>
+</html>
