@@ -169,19 +169,25 @@ const server = http.createServer(async (req, res) => {
       
       /////new payload///
       const target = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-preview:generateContent?key=${key}`;
-      const payload = {
-  contents: [{
-    role: "user",
-    parts: [{ text: `INSTRUCTIONS: You are a high-ticket specialist. Speak with absolute certainty. Use high-value "free bait" hooks. Be caring, curious, and helpful, yet dominant and demanding of attention.
+             const payload = {
+        contents: [{ 
+          role: "user",
+          parts: [{ text: `INSTRUCTIONS: You are a high-ticket outreach specialist. 
+          1. Find the lead's name by searching their website, facebook profile, instagram profile, LinkedIn profile,(if found) or Google Business reviews.
+          2. LEAD WITH AN OBSERVATION: Start the message with a specific, short detail about their business (e.g., a recent review or a specific service they offer). 
+          3. KEEP IT SHORT: No more than 3-4 sentences total.
+          4. TONE: Absolute certainty, caring but dominant, and helpful.
 
-    USER REQUEST: ${prompt}` }]
-  }],
-  generationConfig: {
-    maxOutputTokens: 16384, // Increased significantly for complete output
-    temperature: 0.85,     // High for assertive, creative tonality
-    topP: 0.95
-  }
-};
+         LEAD DATA: ${prompt}` }]  /*USER REQUEST:${prompt}` */
+        }],
+        // THIS GIVES GEMINI THE "EYES" TO SEARCH THE WEB
+        tools: [{ google_search: {} }], 
+        generationConfig: { 
+          maxOutputTokens: 1000, // Shorter for outreach
+          temperature: 0.4,       // Lower for better factual observations
+          topP: 0.95
+        }
+      };
 
 //////
       console.log(`[Gemini] prompt length: ${prompt.length} chars, max tokens: ${max || 4096}`);
