@@ -679,7 +679,7 @@ function nav(v){
 // ═══════════════════════════════════════ API LAYER
 // Calls go to the local Node proxy server (server.js) running on port 3001
 // This completely bypasses CORS — the server makes the real API calls
-const PROXY='http://localhost:3001';
+const PROXY = '';
 
 async function apiCall(path,opts={}){
   const ctrl=new AbortController();
