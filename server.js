@@ -166,13 +166,24 @@ const server = http.createServer(async (req, res) => {
     try {
       const { key, prompt, max } = await readBody(req);
       if (!key) return send(res, 400, { error: 'No Gemini key provided' });
-
-      const target = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`;
+      
+      /////new payload///
+      const target = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-preview:generateContent?key=${key}`;
       const payload = {
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { maxOutputTokens: max || 4096, temperature: 0.5 }
-      };
+  contents: [{
+    role: "user",
+    parts: [{ text: `INSTRUCTIONS: You are a high-ticket specialist. Speak with absolute certainty. Use high-value "free bait" hooks. Be caring, curious, and helpful, yet dominant and demanding of attention.
 
+    USER REQUEST: ${prompt}` }]
+  }],
+  generationConfig: {
+    maxOutputTokens: 16384, // Increased significantly for complete output
+    temperature: 0.85,     // High for assertive, creative tonality
+    topP: 0.95
+  }
+};
+
+//////
       console.log(`[Gemini] prompt length: ${prompt.length} chars, max tokens: ${max || 4096}`);
       const result = await httpsPost(target, payload);
 
