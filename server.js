@@ -193,7 +193,7 @@ const server = http.createServer(async (req, res) => {
   send(res, 404, { error: 'Not found: ' + pathname });
 });
 
-server.listen(PORT, '127.0.0.1', () => {
+server.listen(PORT, '0.0.0.0', () => {
   console.log('');
   console.log('  ██╗   ██╗███╗   ██╗ ██████╗██╗  ██╗');
   console.log('  ██║   ██║████╗  ██║██╔════╝╚██╗██╔╝');
