@@ -167,7 +167,7 @@ const server = http.createServer(async (req, res) => {
       const { key, prompt, max } = await readBody(req);
       if (!key) return send(res, 400, { error: 'No Gemini key provided' });
 
-      const target = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`;
+      const target = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`;
       const payload = {
         contents: [{ parts: [{ text: prompt }] }],
         generationConfig: { maxOutputTokens: max || 4096, temperature: 0.5 }
